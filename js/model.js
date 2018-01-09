@@ -20,7 +20,7 @@ var indianRestaurants = [
 	{
 		name: 'Hyderabad House',
 		address: '8840 N Michigan Rd #105, Indianapolis, IN 46268',
-		lat: 39.915963
+		lat: 39.915963,
 		lng: -86.226100
 	},
 	{
@@ -32,7 +32,7 @@ var indianRestaurants = [
 	{
 		name: 'India Garden | Downtown',
 		address: '207 N Delaware St, Indianapolis, IN 46204',
-		lat: 39.7701692
+		lat: 39.7701692,
 		lng: -86.1563702
 	},
 	{
