@@ -250,9 +250,19 @@ function initMap() {
 
 	// TODO: DELETE LATER
     var royalIndian = { lat: 39.9046409, lng: -86.0660631 };
-    var marker = new google.maps.Marker({
-    	position: royalIndian,
-    	map: map,
-    	title: 'Royal Indian Marker'
+    indianRestaurants.forEach(function(restaurant) {
+    	var position = restaurant.position;
+    	var title = restaurant.name;
+    	var marker = new google.maps.Marker({
+    		position: position,
+    		title: name,
+    		map: map,
+    		animation: google.maps.Animation.DROP
+       	});
     });
+    // var marker = new google.maps.Marker({
+    // 	position: royalIndian,
+    // 	map: map,
+    // 	title: 'Royal Indian Marker'
+    // });
 }
