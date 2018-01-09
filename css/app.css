@@ -7,6 +7,8 @@ https://developers.google.com/maps/documentation/javascript/basics
 
 body {
 	font-family: Raleway, Verdana, sans-serif;
+	background-color: #444;
+	color: #fff;
 }
 
 html, body {
@@ -14,10 +16,14 @@ html, body {
 	padding: 0;
 }
 
-/* TODO: Unsure if below style necessary */
-html, body, section, #map {
+/* This was hiding map controls. Map center with this styling was {lat: 39.8, lng: -86.0581} */
+/*html, body, section, #map {
 	width: 100%;
 	height: 100%;
+}*/
+
+input, #map {
+	color: #000;
 }
 
 #map {

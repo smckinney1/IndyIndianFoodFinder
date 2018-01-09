@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/smckinney1/MapsProject#readme",
   "dependencies": {
+    "gulp-uglify": "^3.0.0",
     "knockout": "^3.4.2",
     "normalize.css": "^7.0.0"
   },

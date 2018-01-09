@@ -1,4 +1,5 @@
 /*TODO: Implement favorites and/or notes about each location, saved to local storage*/
+// TODO: Project should adhere to Knockout/MVMM framework
 
 var map,
 	markers = [];
@@ -243,15 +244,15 @@ function initMap() {
 	];
 
 	// Instantiate the map in the DOM
-	// TODO: Centering seems off
+	// Do not allow users to change to different views, ex: satellite
 	map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 39.7684, lng: -86.1581},
+        center: {lat: 39.8, lng: -86.1581},
         zoom: 11,
-        styles: styles
+        styles: styles,
+        mapTypeControl: false
     });
 
     var infoWindow = new google.maps.InfoWindow();
-    // TODO - DELETE: infoWindow.setContent('hello world');
 
 	// Looping through all map locations to create markers
     indianRestaurants.forEach(function(restaurant) {
@@ -270,7 +271,7 @@ function initMap() {
 
        	//Create info window
        	marker.addListener('click', function() {
-       		infoWindow.setContent(restaurant.name + '<br><br>' + restaurant.address);
+       		infoWindow.setContent('<div id="info-window">' + '<h3>' + restaurant.name + '</h3>' + restaurant.address + '</div>');
        		infoWindow.open(map, marker);
        		//populateInfoWindow(marker);
        	});
