@@ -1,5 +1,3 @@
-/*AIzaSyBs9yngCe6bL0VDv8Ost1EVmAD1sq_ppJI*/
-
 //Map styles: https://snazzymaps.com/style/128473/pink
 
 /*TODO: Implement favorites and/or notes about each location, saved to local storage*/
@@ -243,9 +241,18 @@ function initMap() {
 	        ]
 	    }
 	];
+
 	map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 39.7684, lng: -86.1581},
         zoom: 11,
         styles: styles
+    });
+
+	// TODO: DELETE LATER
+    var royalIndian = { lat: 39.9046409, lng: -86.0660631 };
+    var marker = new google.maps.Marker({
+    	position: royalIndian,
+    	map: map,
+    	title: 'Royal Indian Marker'
     });
 }
