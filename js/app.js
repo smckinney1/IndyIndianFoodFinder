@@ -1,10 +1,10 @@
-//Map styles: https://snazzymaps.com/style/128473/pink
-
 /*TODO: Implement favorites and/or notes about each location, saved to local storage*/
 
-var map;
+var map,
+	markers = [];
 
 function initMap() {
+	// Styles courtesy of https://snazzymaps.com/style/128473/pink
 	var styles = [
 	    {
 	        "featureType": "administrative",
@@ -242,27 +242,42 @@ function initMap() {
 	    }
 	];
 
+	// Instantiate the map in the DOM
+	// TODO: Centering seems off
 	map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 39.7684, lng: -86.1581},
         zoom: 11,
         styles: styles
     });
 
-	// TODO: DELETE LATER
-    var royalIndian = { lat: 39.9046409, lng: -86.0660631 };
+    var infoWindow = new google.maps.InfoWindow();
+    // TODO - DELETE: infoWindow.setContent('hello world');
+
+	// Looping through all map locations to create markers
     indianRestaurants.forEach(function(restaurant) {
     	var position = restaurant.position;
     	var title = restaurant.name;
+
     	var marker = new google.maps.Marker({
     		position: position,
     		title: name,
     		map: map,
     		animation: google.maps.Animation.DROP
        	});
+
+       	// Add the marker to the array of markers
+       	markers.push(marker);
+
+       	//Create info window
+       	marker.addListener('click', function() {
+       		infoWindow.setContent(restaurant.name + '<br><br>' + restaurant.address);
+       		infoWindow.open(map, marker);
+       		//populateInfoWindow(marker);
+       	});
     });
-    // var marker = new google.maps.Marker({
-    // 	position: royalIndian,
-    // 	map: map,
-    // 	title: 'Royal Indian Marker'
-    // });
+
+    // TODO: Determine if necessary to use function to populate infoWindow
+    function populateInfoWindow(marker) {
+    	//
+    }
 }

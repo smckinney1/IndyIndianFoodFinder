@@ -1,11 +1,23 @@
+/******************************
+
+Styling tips from Google API Docs:
+https://developers.google.com/maps/documentation/javascript/basics
+
+******************************/
+
+body {
+	font-family: Raleway, Verdana, sans-serif;
+}
+
 html, body {
-	height: 100%;
 	margin: 0;
 	padding: 0;
 }
 
-body {
-	font-family: Raleway, Verdana, sans-serif;
+/* TODO: Unsure if below style necessary */
+html, body, section, #map {
+	width: 100%;
+	height: 100%;
 }
 
 #map {
