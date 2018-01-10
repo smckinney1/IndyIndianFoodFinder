@@ -1,11 +1,13 @@
 /*TODO: Implement favorites and/or notes about each location, saved to local storage*/
 // TODO: Project should adhere to Knockout/MVMM framework
 
+// Map styles courtesy of https://snazzymaps.com/style/128473/pink
+// Map pins courtesy of Maps Icons Collection https://mapicons.mapsmarker.com
+
 var map,
 	markers = [];
 
 function initMap() {
-	// Styles courtesy of https://snazzymaps.com/style/128473/pink
 	var styles = [
 	    {
 	        "featureType": "administrative",
@@ -260,6 +262,7 @@ function initMap() {
     	var title = restaurant.name;
 
     	var marker = new google.maps.Marker({
+    		icon: 'img/yellow-pin.png',
     		position: position,
     		title: name,
     		map: map,
@@ -269,11 +272,23 @@ function initMap() {
        	// Add the marker to the array of markers
        	markers.push(marker);
 
+       	/****** MARKER WINDOW LISTENERS ******/
+
        	//Create info window
        	marker.addListener('click', function() {
        		infoWindow.setContent('<div id="info-window">' + '<h3>' + restaurant.name + '</h3>' + restaurant.address + '</div>');
        		infoWindow.open(map, marker);
        		//populateInfoWindow(marker);
+       	});
+
+
+       	//Change marker appearance on mouseover/mouseout
+       	marker.addListener('mouseover', function() {
+       		this.setIcon('img/orange-pin.png');
+       	});
+
+       	marker.addListener('mouseout', function() {
+       		this.setIcon('img/yellow-pin.png');
        	});
     });
 
