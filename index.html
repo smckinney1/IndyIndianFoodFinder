@@ -15,6 +15,9 @@
 		<section>
 			<h1>Local Indian Food</h1>
 			<input type="text" placeholder="search">
+			<ul data-bind="foreach: restaurantList">
+				<li data-bind="text: $data.name"></li>
+			</ul>
 			<div id="map"></div>
 		</section>
 	</div>
@@ -26,10 +29,11 @@
 	  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 	  crossorigin="anonymous">
 	</script>
+	<script src="js/lib/knockout.js"></script>
 	<script src="js/model.js"></script>
 	<script src="js/app.js"></script>
-	<script async defer 
+	<!-- <script async defer 
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBs9yngCe6bL0VDv8Ost1EVmAD1sq_ppJI&v=3&callback=initMap">
-	</script>
+	</script> -->
 </body>
 </html>

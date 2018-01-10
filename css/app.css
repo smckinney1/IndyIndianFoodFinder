@@ -26,6 +26,17 @@ input, #map {
 	color: #000;
 }
 
+ul {
+	padding-left: 0px;
+}
+
+li {
+	font-size: 22px;
+	list-style-type: none;
+	padding: 5px;
+	margin-top: 15px;
+}
+
 #map {
 	position: absolute;
 	top: 0px;
