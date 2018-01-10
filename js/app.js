@@ -1,30 +1,32 @@
 var map,
 	markers = [];
 
-var Restaurant = function (data) {
+var Restaurant = function (restaurantData, map) {
 	var self = this;
-	self.name = data.name;
-	self.address = data.address;
-	self.position = data.position;
+	self.name = restaurantData.name;
+	self.address = restaurantData.address;
+	self.position = restaurantData.position;
+	self.map = map;
 
 	//TODO: Ensure map is set later
-	/* self.marker = new google.maps.Marker({
+	 self.marker = new google.maps.Marker({
 		icon: 'img/yellow-pin.png',
 		position: self.position,
 		title: self.name,
-		map: null,
+		map: self.map,
 		animation: google.maps.Animation.DROP
-    }); */
+    }); 
 
 	//TODO: infoWindow
 };
 
-var MapViewModel = function() {
+var ViewModel = function(map) {
 	var self = this;
+	this.map = map;
 
 	self.restaurantList = ko.observableArray([]);
 	indianRestaurants.forEach(function(r) {
-		self.restaurantList.push(new Restaurant(r));
+		self.restaurantList.push(new Restaurant(r, map));
 	});
 
 	
@@ -284,7 +286,7 @@ function initMap () {
     });
 
     //var infoWindow = new google.maps.InfoWindow();
+
+    ko.applyBindings(new ViewModel(map));
 }
 
-var mapViewModel = new MapViewModel();
-ko.applyBindings(mapViewModel);
