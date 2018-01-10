@@ -4,6 +4,8 @@
 /*TODO: Add Places library to show reviews*/
 /*TODO: Add Yelp API calls*/
 
+//https://developers.google.com/maps/documentation/javascript/places
+
 // TODO: Project should adhere to Knockout/MVMM framework
 
 // Map styles courtesy of https://snazzymaps.com/style/128473/pink
