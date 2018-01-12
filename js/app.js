@@ -1,5 +1,6 @@
 var map,
-	markers = [];
+	markers = [],
+	infoWindow;
 
 var Restaurant = function (restaurantData, map) {
 	var self = this;
@@ -17,11 +18,11 @@ var Restaurant = function (restaurantData, map) {
     });
 
 	self.addMarkerListeners(self.marker);
+	markers.push(self.marker);
 };
 
 Restaurant.prototype.addMarkerListeners = function(marker) {
 	var self = this;
-	var infoWindow = new google.maps.InfoWindow();
 
 	//Create info window
    	marker.addListener('click', function() {
@@ -50,6 +51,13 @@ var ViewModel = function(map) {
 	});
 };
 
+// ????
+function hideMarkers() {
+	markers.forEach(function(marker) {
+		marker.setMap(null);
+	});
+}
+
 function initMap () {
 	// Create the map
 	map = new google.maps.Map(document.getElementById('map'), {
@@ -58,6 +66,10 @@ function initMap () {
         styles: MAP_STYLES,
         mapTypeControl: false
     });
+
+	// Creating the info window, which will be modified any time
+	// a user clicks on a marker
+    infoWindow = new google.maps.InfoWindow();
 
 	// Re-center map when page is resized
     google.maps.event.addDomListener(window, 'resize', function() {
