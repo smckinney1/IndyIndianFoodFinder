@@ -15,8 +15,8 @@
 		<section>
 			<h1>Local Indian Food</h1>
 			<input type="text" placeholder="search" autofocus>
-			<ul data-bind="foreach: restaurantList">
-				<li data-bind="text: $data.name"></li>
+			<ul data-bind="foreach: sortedRestaurantList">
+				<li data-bind="text: $data.name, click: $parent.doClickyStuff"></li>
 			</ul>
 			<div id="map"></div>
 		</section>

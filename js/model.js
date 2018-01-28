@@ -98,8 +98,4 @@ var indianRestaurants = [
 		},
 		foursquareID: '522a017411d2e01bdb60a6f8'
 	}
-]
-
-/*indianRestaurants.forEach(function(restaurant) {
-	
-});*/
+];

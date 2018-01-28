@@ -37,6 +37,26 @@ li {
 	margin-top: 15px;
 }
 
+.info-window-li {
+	font-size: 12px;
+	margin-top: -10px;
+	margin-bottom: 5px;
+}
+
+/* TODO: Temporary styling */
+.restPhoto {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	width: 150;
+	height: 150px;
+}
+
+.fs-img {
+	display: block;
+}
+
 #map {
 	position: absolute;
 	top: 0px;
