@@ -1,3 +1,14 @@
+/*
+client_id=4QN5YREYJVRTVXRRFC3Z5RLDVVXGEIYXXJN5ER1QXJPNK2HD
+client_secret=YOSEENXFZGGMTIENAUMGYPGLLFJKQLKW4WXBLTC0NVCVT2X0
+v=20180101
+
+URL like this works: https://foursquare.com/v/4ba69308f964a520925f39e3
+
+Sample call:
+https://api.foursquare.com/v2/venues/4ba69308f964a520925f39e3?client_id=4QN5YREYJVRTVXRRFC3Z5RLDVVXGEIYXXJN5ER1QXJPNK2HD&client_secret=YOSEENXFZGGMTIENAUMGYPGLLFJKQLKW4WXBLTC0NVCVT2X0&v=20180101
+*/
+
 var indianRestaurants = [
 	{
 		name: 'Apna Kitchen',
@@ -98,8 +109,26 @@ var indianRestaurants = [
 		},
 		foursquareID: '522a017411d2e01bdb60a6f8'
 	}
-]
+];
 
-/*indianRestaurants.forEach(function(restaurant) {
-	
-});*/
+//Code in this function creates working API call
+
+function getFoursquareData() {
+	indianRestaurants.forEach(function(rest) {
+		$.ajax({
+			url: 'https://api.foursquare.com/v2/venues/' + rest.foursquareID, 
+			data: {
+				client_id: '4QN5YREYJVRTVXRRFC3Z5RLDVVXGEIYXXJN5ER1QXJPNK2HD',
+				client_secret: 'YOSEENXFZGGMTIENAUMGYPGLLFJKQLKW4WXBLTC0NVCVT2X0',
+				v: '20180101',
+			},
+			success: function(data) {
+				console.log(data.response.venue.name);
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	});
+}
+

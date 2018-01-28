@@ -1,3 +1,9 @@
+const FS_CLIENT_ID = '4QN5YREYJVRTVXRRFC3Z5RLDVVXGEIYXXJN5ER1QXJPNK2HD';
+const FS_CLIENT_SECRET = 'YOSEENXFZGGMTIENAUMGYPGLLFJKQLKW4WXBLTC0NVCVT2X0'
+const FS_API_VERSION = '20180101';
+const FS_ENDPOINT = 'https://api.foursquare.com/v2/venues/'
+const FS_QUERY_STRING = '?client_id=' + FS_CLIENT_ID + '&client_secret=' + FS_CLIENT_SECRET + '&v=' + FS_API_VERSION;
+
 const MAP_STYLES = [
     {
         "featureType": "administrative",

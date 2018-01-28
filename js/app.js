@@ -1,13 +1,25 @@
 var map,
 	markers = [],
-	infoWindow;
+	locations = [],
+	infoWindow,
+	venue, 
+	checkInCount, 
+	rating, 
+	ratingColor, 
+	hereNow, 
+	bestPhotoHTML;
 
-var Restaurant = function (restaurantData, map) {
+var Restaurant = function (restaurantData, map, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML) {
 	var self = this;
 	self.name = restaurantData.name;
 	self.address = restaurantData.address;
 	self.position = restaurantData.position;
 	self.map = map;
+	self.checkInCount = checkInCount;
+	self.rating = rating;
+	self.ratingColor = ratingColor;
+	self.hereNow = hereNow;
+	self.bestPhotoHTML = bestPhotoHTML;
 
 	self.marker = new google.maps.Marker({
 		icon: 'img/yellow-pin.png',
@@ -19,6 +31,9 @@ var Restaurant = function (restaurantData, map) {
 
 	self.addMarkerListeners(self.marker);
 	markers.push(self.marker);
+
+	// TODO: Remove
+	console.log(this);
 };
 
 Restaurant.prototype.addMarkerListeners = function(marker) {
@@ -46,12 +61,28 @@ var ViewModel = function(map) {
 	this.map = map;
 
 	self.restaurantList = ko.observableArray([]);
-	indianRestaurants.forEach(function(r) {
-		self.restaurantList.push(new Restaurant(r, map));
+	indianRestaurants.forEach(function(restaurant) {
+		var url = FS_ENDPOINT + restaurant.foursquareID + FS_QUERY_STRING;
+
+		// API call to FourSquare
+		// TODO: Should this be called in the ViewModel or Model?
+		// TODO: Change the error handling
+		fetch(url)
+			.then( response => response.json() )
+			.then( data => {
+				venue = data.response.venue;
+				checkInCount = venue.stats.checkinsCount;
+				rating = venue.rating;
+				ratingColor = venue.ratingColor;
+				hereNow = venue.hereNow.count;
+				bestPhotoHTML = '<img src="' + venue.bestPhoto.prefix + '' + venue.bestPhoto.width + 'x' + venue.bestPhoto.height  + venue.bestPhoto.suffix + '">';
+				self.restaurantList.push(new Restaurant(restaurant, map, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML));
+			})
+			.catch( error => console.log(error) );
 	});
 };
 
-// ????
+// TODO: Needed????
 function hideMarkers() {
 	markers.forEach(function(marker) {
 		marker.setMap(null);
