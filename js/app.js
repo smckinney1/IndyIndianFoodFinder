@@ -17,6 +17,7 @@ var Restaurant = function (restaurantData, map, checkInCount, rating, ratingColo
 	self.name = restaurantData.name;
 	self.address = restaurantData.address;
 	self.position = restaurantData.position;
+	self.foursquareID = restaurantData.foursquareID;
 	self.map = map;
 	self.checkInCount = checkInCount;
 	self.rating = rating;
@@ -44,7 +45,6 @@ Restaurant.prototype.addMarkerListeners = function(marker) {
 
    		// TODO: Build HTML somewhere else?
    		
-
    		infoWindow.setContent(self.createInfoWindowHTML());
    		$('#rating').css('background-color', self.ratingColor);
    		infoWindow.open(map, marker);
@@ -62,11 +62,14 @@ Restaurant.prototype.addMarkerListeners = function(marker) {
 };
 
 Restaurant.prototype.createInfoWindowHTML = function() {
-	return '<div id="info-window">' + this.bestPhotoHTML + '<h3>' + this.name + '</h3>' 
-   			+ '<p>' + this.address + '</p>' + '<img id="fs-img" src="img/FourSquare_Social.png">'
-   			+ '<ul><li class="info-window-li">Here Now: ' + this.hereNow + '</li>'
-   			+ '<li class="info-window-li">Check-in Count: ' + this.checkInCount + '</li>'
-   			+ '<li class="info-window-li" id="rating">Rating: ' + this.rating + '</li>'
+	return '<div id="info-window">' + this.bestPhotoHTML 
+			+ '<h3>' + this.name + '</h3>' 
+   			+ '<p>' + this.address + '</p>' 
+   			+ '<a href="' + FS_BASE_URL + this.foursquareID + '" target="_blank"><img id="fs-img" src="img/FourSquare_Social.png"></a>'
+   			+ '<ul>'
+	   			+ '<li class="info-window-li">Here Now: ' + this.hereNow + '</li>'
+	   			+ '<li class="info-window-li">Check-in Count: ' + this.checkInCount + '</li>'
+	   			+ '<li class="info-window-li" id="rating">Rating: ' + this.rating + '</li>'
    			+ '</ul></div>';
 };
 
@@ -106,7 +109,7 @@ var ViewModel = function(map) {
 
 	// TODO: Change name of function and get it working
 	self.doClickyStuff = function() {
-		console.log(this);
+		console.dir(this);
 
 		var self = this;
 
@@ -118,6 +121,7 @@ var ViewModel = function(map) {
 		// Marker bounce animation stops after 1.5 seconds
 		setTimeout(function() {
 			self.marker.setAnimation(null);
+			this.infoWindow.setContent(self.createInfoWindowHTML());
 			this.infoWindow.open(self.map, self.marker);
 		}, 1500);
 

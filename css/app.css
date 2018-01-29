@@ -31,16 +31,19 @@ ul {
 }
 
 li {
-	font-size: 22px;
 	list-style-type: none;
-	padding: 5px;
+}
+
+.restaurant-list {
+	font-size: 22px;
 	margin-top: 15px;
+	padding: 5px;
+	cursor: pointer;
 }
 
 .info-window-li {
 	font-size: 12px;
-	margin-top: -10px;
-	margin-bottom: 5px;
+	margin: 0;
 }
 
 /* TODO: Temporary styling */
@@ -49,7 +52,7 @@ li {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 20px;
-	width: 150;
+	width: 150px;
 	height: 150px;
 }
 
