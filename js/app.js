@@ -10,7 +10,24 @@ var map,
 	rating, 
 	ratingColor, 
 	hereNow, 
-	bestPhotoHTML;
+	bestPhotoHTML,
+	filter;
+
+function filterResults() {
+	filter = $('input').val().toUpperCase();
+	$('li').each(function() {
+		if (this.innerHTML.toUpperCase().indexOf(filter) === 0) {
+			$(this).css('display', '');
+		} else {
+			$(this).css('display', 'none');
+		}
+	});
+		// If the list item's first letter matches the first letter of the filter text,
+		// reset the CSS display property.
+		// Else, set display to "none" to hide the element.
+}
+
+$('input').keyup(filterResults);
 
 var Restaurant = function (restaurantData, map, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML) {
 	var self = this;
@@ -124,9 +141,6 @@ var ViewModel = function(map) {
 			this.infoWindow.setContent(self.createInfoWindowHTML());
 			this.infoWindow.open(self.map, self.marker);
 		}, 1500);
-
-
-
 	}
 };
 
