@@ -1,6 +1,11 @@
 /****** SAMPLE CALL TO FOURSQUARE API ******/
 //https://api.foursquare.com/v2/venues/4ba69308f964a520925f39e3?client_id=4QN5YREYJVRTVXRRFC3Z5RLDVVXGEIYXXJN5ER1QXJPNK2HD&client_secret=YOSEENXFZGGMTIENAUMGYPGLLFJKQLKW4WXBLTC0NVCVT2X0&v=20180101
 
+
+// https://jsfiddle.net/L9y47uyf/
+// TODO: Handle undefined data better from FS API calls (data unavailable for this location)
+// TODO: Hide other markers when a search has been applied
+
 var map,
 	markers = [],
 	locations = [],
@@ -15,6 +20,9 @@ var map,
 
 function filterResults() {
 	filter = $('input').val().toUpperCase();
+
+	// If the list item's first letter matches the first letter of the filter text, reset the CSS display property.
+	// Else, set display to "none" to hide the element.
 	$('li').each(function() {
 		if (this.innerHTML.toUpperCase().indexOf(filter) === 0) {
 			$(this).css('display', '');
@@ -22,9 +30,6 @@ function filterResults() {
 			$(this).css('display', 'none');
 		}
 	});
-		// If the list item's first letter matches the first letter of the filter text,
-		// reset the CSS display property.
-		// Else, set display to "none" to hide the element.
 }
 
 $('input').keyup(filterResults);
