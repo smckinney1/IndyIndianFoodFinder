@@ -18,7 +18,7 @@ var map,
 	bestPhotoHTML,
 	filter;
 
-function filterResults() {
+/*function filterResults() {
 	filter = $('input').val().toUpperCase();
 
 	// If the list item's first letter matches the first letter of the filter text, reset the CSS display property.
@@ -30,9 +30,9 @@ function filterResults() {
 			$(this).css('display', 'none');
 		}
 	});
-}
+}*/
 
-$('input').keyup(filterResults);
+// $('input').keyup(filterResults);
 
 var Restaurant = function (restaurantData, map, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML) {
 	var self = this;
@@ -124,6 +124,7 @@ var ViewModel = function(map) {
 
 	// Provide the DOM with a restaurant list sorted by name
 	self.sortedRestaurantList = ko.computed(function() {
+		console.log('aaaa')
 		return self.restaurantList().sort(function (left, right) {
 			return left.name == right.name ? 0 : (left.name < right.name ? -1 : 1);
 		});
@@ -147,6 +148,16 @@ var ViewModel = function(map) {
 			this.infoWindow.open(self.map, self.marker);
 		}, 1500);
 	}
+
+	/////////////////////////////////////////////////////////////////////\
+	self.searchQuery = ko.observable('');
+	// var grr = ko.observableArray([{name: 'UGH'}, {name: 'BLAH!'}, {name: 'HAI'}]);
+
+	self.filteredRestaurantList = ko.computed(function() {
+		console.log('second')
+		return self.restaurantList().filter(item => item.name.toUpperCase().indexOf(self.searchQuery().toUpperCase()) === 0);
+	});
+	/////////////////////////////////////////////////////////////////////
 };
 
 // TODO: Needed????
