@@ -18,29 +18,18 @@ var map,
 	bestPhotoHTML,
 	filter;
 
-/*function filterResults() {
-	filter = $('input').val().toUpperCase();
-
-	// If the list item's first letter matches the first letter of the filter text, reset the CSS display property.
-	// Else, set display to "none" to hide the element.
-	$('li').each(function() {
-		if (this.innerHTML.toUpperCase().indexOf(filter) === 0) {
-			$(this).css('display', '');
-		} else {
-			$(this).css('display', 'none');
-		}
-	});
-}*/
-
-// $('input').keyup(filterResults);
-
 var Restaurant = function (restaurantData, map, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML) {
 	var self = this;
+	// Data from model.js
 	self.name = restaurantData.name;
 	self.address = restaurantData.address;
 	self.position = restaurantData.position;
 	self.foursquareID = restaurantData.foursquareID;
+
+	// Required to work with map on screen
 	self.map = map;
+
+	// Data from API call to FourSquare
 	self.checkInCount = checkInCount;
 	self.rating = rating;
 	self.ratingColor = ratingColor;
@@ -64,9 +53,6 @@ Restaurant.prototype.addMarkerListeners = function(marker) {
 
 	//Create info window
    	marker.addListener('click', function() {
-
-   		// TODO: Build HTML somewhere else?
-   		
    		infoWindow.setContent(self.createInfoWindowHTML());
    		$('#rating').css('background-color', self.ratingColor);
    		infoWindow.open(map, marker);
@@ -98,13 +84,13 @@ Restaurant.prototype.createInfoWindowHTML = function() {
 var ViewModel = function(map) {
 	var self = this;
 	self.map = map;
-
 	self.restaurantList = ko.observableArray([]);
+	self.searchQuery = ko.observable('');
 
+	// Call FourSquare API & push to restaurant list
 	indianRestaurants.forEach(function(restaurant) {
 		var url = FS_ENDPOINT + restaurant.foursquareID + FS_QUERY_STRING;
 
-		// API call to FourSquare
 		// TODO: Should this be called in the ViewModel or Model?
 		// TODO: Change the error handling
 		fetch(url)
@@ -124,16 +110,18 @@ var ViewModel = function(map) {
 
 	// Provide the DOM with a restaurant list sorted by name
 	self.sortedRestaurantList = ko.computed(function() {
-		console.log('aaaa')
 		return self.restaurantList().sort(function (left, right) {
 			return left.name == right.name ? 0 : (left.name < right.name ? -1 : 1);
 		});
 	});
 
-	// TODO: Change name of function and get it working
-	self.doClickyStuff = function() {
-		console.dir(this);
+	// Restaurant list is filtered when a user begins typing in the Search box
+	// Checks if the first characters in the search query are contained in the first characters of the restaurant name
+	self.filteredRestaurantList = ko.computed(function() {
+		return self.restaurantList().filter(item => item.name.toUpperCase().indexOf(self.searchQuery().toUpperCase()) === 0);
+	});
 
+	self.restaurantClickHandler = function() {
 		var self = this;
 
 		// Zoom in the map and set position
@@ -148,16 +136,6 @@ var ViewModel = function(map) {
 			this.infoWindow.open(self.map, self.marker);
 		}, 1500);
 	}
-
-	/////////////////////////////////////////////////////////////////////\
-	self.searchQuery = ko.observable('');
-	// var grr = ko.observableArray([{name: 'UGH'}, {name: 'BLAH!'}, {name: 'HAI'}]);
-
-	self.filteredRestaurantList = ko.computed(function() {
-		console.log('second')
-		return self.restaurantList().filter(item => item.name.toUpperCase().indexOf(self.searchQuery().toUpperCase()) === 0);
-	});
-	/////////////////////////////////////////////////////////////////////
 };
 
 // TODO: Needed????
@@ -177,8 +155,7 @@ function initMap () {
         mapTypeControl: false
     });
 
-	// Creating the info window, which will be modified any time
-	// a user clicks on a marker
+	// Creating the info window, which will be modified any time a user clicks on a marker
     infoWindow = new google.maps.InfoWindow();
 
 	// Re-center map when page is resized
