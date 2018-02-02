@@ -1,8 +1,6 @@
 /****** SAMPLE CALL TO FOURSQUARE API ******/
 //https://api.foursquare.com/v2/venues/4ba69308f964a520925f39e3?client_id=4QN5YREYJVRTVXRRFC3Z5RLDVVXGEIYXXJN5ER1QXJPNK2HD&client_secret=YOSEENXFZGGMTIENAUMGYPGLLFJKQLKW4WXBLTC0NVCVT2X0&v=20180101
 
-
-// https://jsfiddle.net/L9y47uyf/
 // TODO: Handle undefined data better from FS API calls (data unavailable for this location)
 // TODO: Hide other markers when a search has been applied
 
@@ -51,14 +49,16 @@ var Restaurant = function (restaurantData, map, checkInCount, rating, ratingColo
 Restaurant.prototype.addMarkerListeners = function(marker) {
 	var self = this;
 
-	//Create info window
+	// Create info window
    	marker.addListener('click', function() {
    		infoWindow.setContent(self.createInfoWindowHTML());
+
+   		// TODO: This styling does not actually work
    		$('#rating').css('background-color', self.ratingColor);
    		infoWindow.open(map, marker);
    	});
 
-   	//Change marker appearance on mouseover/mouseout
+   	// Change marker appearance on mouseover/mouseout
    	marker.addListener('mouseover', function() {
    		this.setIcon('img/orange-pin.png');
    	});
@@ -69,6 +69,7 @@ Restaurant.prototype.addMarkerListeners = function(marker) {
 
 };
 
+// TODO: Is this in the right place? VM vs outside of the VM?
 Restaurant.prototype.createInfoWindowHTML = function() {
 	return '<div id="info-window">' + this.bestPhotoHTML 
 			+ '<h3>' + this.name + '</h3>' 
@@ -108,33 +109,28 @@ var ViewModel = function(map) {
 
 	});
 
-	// Provide the DOM with a restaurant list sorted by name
-	self.sortedRestaurantList = ko.computed(function() {
-		return self.restaurantList().sort(function (left, right) {
-			return left.name == right.name ? 0 : (left.name < right.name ? -1 : 1);
-		});
-	});
+	// Provide the DOM with a restaurant list sorted by name (automatically runs on page load)
+	self.sortedRestaurantList = ko.computed(() => self.restaurantList.sort((left, right) => left.name == right.name ? 0 : (left.name < right.name ? -1 : 1)));
 
-	// Restaurant list is filtered when a user begins typing in the Search box
+	// The sorted restaurant list is filtered when a user begins typing in the Search box
 	// Checks if the first characters in the search query are contained in the first characters of the restaurant name
-	self.filteredRestaurantList = ko.computed(function() {
-		return self.restaurantList().filter(item => item.name.toUpperCase().indexOf(self.searchQuery().toUpperCase()) === 0);
-	});
+	self.filteredRestaurantList = ko.computed(() => self.restaurantList().filter(item => item.name.toUpperCase().indexOf(self.searchQuery().toUpperCase()) === 0));
 
 	self.restaurantClickHandler = function() {
-		var self = this;
-
 		// Zoom in the map and set position
 		this.map.setZoom(16);
 		this.map.setCenter(this.position);
 		this.marker.setAnimation(google.maps.Animation.BOUNCE);
 
-		// Marker bounce animation stops after 1.5 seconds
-		setTimeout(function() {
-			self.marker.setAnimation(null);
-			this.infoWindow.setContent(self.createInfoWindowHTML());
-			this.infoWindow.open(self.map, self.marker);
-		}, 1500);
+		// TODO: Get color change working properly
+		self.setMarkerColors(this.marker);	
+
+		// Marker bounce animation stops after 1.2 seconds
+		setTimeout(() => {
+			this.marker.setAnimation(null);
+			infoWindow.setContent(this.createInfoWindowHTML());
+			infoWindow.open(map, this.marker);
+		}, 1200);
 	}
 };
 
@@ -144,6 +140,11 @@ var ViewModel = function(map) {
 		marker.setMap(null);
 	});
 }*/
+
+ViewModel.prototype.setMarkerColors = function(marker) {
+	markers.forEach(item => item.setIcon('img/yellow-pin.png'));
+	marker.setIcon('img/orange-pin.png');
+}
 
 function initMap () {
 
