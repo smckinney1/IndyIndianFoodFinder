@@ -91,15 +91,7 @@ var ViewModel = function(map) {
 	self.restaurantList = ko.observableArray([]);
 	self.searchQuery = ko.observable('');
 	self.totalLoaded = 0;
-	self.restaurantsWithErrors = [];
-
-	function checkRestaurantLoad () {
-		if (self.totalLoaded === indianRestaurants.length) {
-			if (self.restaurantsWithErrors.length > 0) {
-				console.log('Aww something bad happened with the following places: ' + self.restaurantsWithErrors);
-			}
-		}
-	}
+	self.restaurantsWithErrors = ko.observableArray([]);
 
 	// Call FourSquare API & push to restaurant list
 	indianRestaurants.forEach(function(restaurant) {
@@ -126,19 +118,35 @@ var ViewModel = function(map) {
 			})
 			.catch( error => { 
 				self.totalLoaded++;
-				self.restaurantsWithErrors.push(restaurant.name);
+				self.restaurantsWithErrors.push({ name: restaurant.name });
 				checkRestaurantLoad();
 			} );
 	});
 
-/*	if (self.restaurantList().length < indianRestaurants.length) {
-		debugger;
-		console.log('something failed');
-	}*/
+	function checkRestaurantLoad () {
+		if (self.totalLoaded === indianRestaurants.length) {
+			if (self.restaurantsWithErrors().length > 0) {
+				console.log(self.restaurantsWithErrors());
+				modalData.openModal();
+			}
+		}
+	}
 
 	// Provide the DOM with a restaurant list sorted by name (automatically runs on page load)
 	self.sortedRestaurantList = ko.computed(() =>  {
 		self.restaurantList().sort((left, right) => {
+			if (left.name == right.name) {
+				return 0;
+			} else if (left.name < right.name) {
+				return -1;
+			} else {
+				return 1;
+			}
+		})
+	});
+
+	self.sortedRestaurantsWithErrors = ko.computed(() =>  {
+		self.restaurantsWithErrors().sort((left, right) => {
 			if (left.name == right.name) {
 				return 0;
 			} else if (left.name < right.name) {
@@ -197,3 +205,5 @@ function initMap () {
 
     ko.applyBindings(new ViewModel(map));
 }
+
+

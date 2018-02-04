@@ -9,9 +9,21 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="css/app.css">
+	<link rel="stylesheet" href="css/modal.css">
 </head>
 <body>
 	<div class="container-fluid">
+
+		<div id="simple-modal" class="modal">
+            <div class="modal-content">
+            	<span id="close-btn">&times;</span>
+                <p>An error occurred retrieving FourSquare data for the following:</p>
+				<ul id="error-list" data-bind="foreach: restaurantsWithErrors">
+					<li data-bind="text: $data.name"></li>
+				</ul>
+            </div>
+        </div>
+
 		<section>
 			<h1>Local Indian Food</h1>
 			<input type="text" placeholder="search" data-bind="value: searchQuery, valueUpdate: 'keyup'" autofocus>
@@ -34,6 +46,7 @@
 	<script async defer 
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBs9yngCe6bL0VDv8Ost1EVmAD1sq_ppJI&v=3&callback=initMap">
 	</script>
+	<script src="js/modal.js"></script>
 	<script src="js/model.js"></script>
 	<script src="js/app.js"></script>
 </body>

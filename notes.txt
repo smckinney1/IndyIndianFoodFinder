@@ -6,8 +6,6 @@ List functionality is responsive and runs error free.
 
 Map displays all location markers by default, and displays the filtered subset of location markers when a filter is applied.
 
-If an API doesn’t load there should be some visible indication on the page (an alert box is ok) that it didn’t load. Note: You do not need to handle cases where the user goes offline.
-
 if using Foursquare, indicate somewhere in your UI and in your README that you are using Foursquare data.
 
 A README file is included detailing all steps required to successfully run the application.
@@ -19,8 +17,11 @@ CREDITS
 Map markers: https://mapicons.mapsmarker.com/markers/tourism/pin/?custom_color=ffbf58
 Favicon: https://www.freefavicon.com/
 
+Rather than using Bootstrap modals or jQuery UI, I elected to learn how to create a modal on my own using Traversy Media's [YouTube](https://www.youtube.com/watch?v=6ophW7Ask_0) tutorial. I modified styling and markup where I felt appropriate.
+
 
 ***************** FINISHED TODOS *****************
 
 
 >>> Markers should animate when clicked (e.g. bouncing, color change.)
+>>> If an API doesn’t load there should be some visible indication on the page (an alert box is ok) that it didn’t load. Note: You do not need to handle cases where the user goes offline.
