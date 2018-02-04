@@ -28,11 +28,13 @@ var Restaurant = function (restaurantData, map, checkInCount, rating, ratingColo
 	self.map = map;
 
 	// Data from API call to FourSquare
-	self.checkInCount = checkInCount;
-	self.rating = rating;
-	self.ratingColor = ratingColor;
-	self.hereNow = hereNow;
-	self.bestPhotoHTML = bestPhotoHTML;
+	if (arguments.length > 2) {
+		self.checkInCount = checkInCount;
+		self.rating = rating;
+		self.ratingColor = ratingColor;
+		self.hereNow = hereNow;
+		self.bestPhotoHTML = bestPhotoHTML;
+	}
 
 	self.marker = new google.maps.Marker({
 		icon: 'img/yellow-pin.png',
@@ -74,15 +76,25 @@ Restaurant.prototype.addMarkerListeners = function(marker) {
 
 // TODO: Is this in the right place? VM vs outside of the VM?
 Restaurant.prototype.createInfoWindowHTML = function() {
-	return '<div id="info-window">' + this.bestPhotoHTML 
-			+ '<h3>' + this.name + '</h3>' 
-   			+ '<p>' + this.address + '</p>' 
-   			+ '<a href="' + FS_BASE_URL + this.foursquareID + '" target="_blank" alt="FourSquare logo" title="Visit on FourSquare"><img id="fs-img" src="img/FourSquare_Social.png"></a>'
-   			+ '<ul>'
+	var foursquareListHTML;
+
+	if (typeof this.hereNow === "number" && typeof this.checkInCount === "number" && typeof this.rating === "number") {
+		foursquareListHTML  = 
+			'<ul>'
 	   			+ '<li class="info-window-li">Here Now: ' + this.hereNow + '</li>'
 	   			+ '<li class="info-window-li">Check-in Count: ' + this.checkInCount + '</li>'
 	   			+ '<li class="info-window-li" id="rating">Rating: ' + this.rating + '</li>'
-   			+ '</ul></div>';
+	   		+ '</ul>';
+	} else {
+		foursquareListHTML = '<p><em>An error occurred fetching Foursquare data for this restaurant.</em></p>';
+	}
+
+	return '<div id="info-window">' + (this.bestPhotoHTML ? this.bestPhotoHTML : '') 
+				+ '<h3>' + this.name + '</h3>' 
+	   			+ '<p>' + this.address + '</p>' 
+	   			+ '<a href="' + FS_BASE_URL + this.foursquareID + '" target="_blank" alt="FourSquare logo" title="Visit on FourSquare"><img id="fs-img" src="img/FourSquare_Social.png"></a>'
+	   			+ foursquareListHTML
+   			+ '</div>';
 };
 
 var ViewModel = function(map) {
@@ -97,12 +109,7 @@ var ViewModel = function(map) {
 	indianRestaurants.forEach(function(restaurant) {
 		var url = FS_ENDPOINT + restaurant.foursquareID + FS_QUERY_STRING;
 
-		if (restaurant.name === 'Chapati' || restaurant.name === 'Apna Kitchen') {
-			url = FS_ENDPOINT + restaurant.foursquareID + "FS_QUERY_STRING";
-		}
-
 		// TODO: Should this be called in the ViewModel or Model?
-		// "Not available" shown if no venue rating.
 		fetch(url)
 			.then( response => response.json() )
 			.then( data => {
@@ -118,15 +125,16 @@ var ViewModel = function(map) {
 			})
 			.catch( error => { 
 				self.totalLoaded++;
+				self.restaurantList.push(new Restaurant(restaurant, map));
 				self.restaurantsWithErrors.push({ name: restaurant.name });
 				checkRestaurantLoad();
 			} );
 	});
 
+	// Open modal if errors occurred fetching Foursquare data
 	function checkRestaurantLoad () {
 		if (self.totalLoaded === indianRestaurants.length) {
 			if (self.restaurantsWithErrors().length > 0) {
-				console.log(self.restaurantsWithErrors());
 				modalData.openModal();
 			}
 		}

@@ -2,8 +2,6 @@
 
 All application components render on-screen in a responsive manner.
 
-List functionality is responsive and runs error free.
-
 Map displays all location markers by default, and displays the filtered subset of location markers when a filter is applied.
 
 if using Foursquare, indicate somewhere in your UI and in your README that you are using Foursquare data.
@@ -18,6 +16,8 @@ Map markers: https://mapicons.mapsmarker.com/markers/tourism/pin/?custom_color=f
 Favicon: https://www.freefavicon.com/
 
 Rather than using Bootstrap modals or jQuery UI, I elected to learn how to create a modal on my own using Traversy Media's [YouTube](https://www.youtube.com/watch?v=6ophW7Ask_0) tutorial. I modified styling and markup where I felt appropriate.
+
+Foursquare
 
 
 ***************** FINISHED TODOS *****************
