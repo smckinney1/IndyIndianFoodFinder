@@ -51,11 +51,19 @@ Restaurant.prototype.addMarkerListeners = function(marker) {
 
 	// Create info window
    	marker.addListener('click', function() {
-   		infoWindow.setContent(self.createInfoWindowHTML());
+   		// infoWindow.setContent(self.createInfoWindowHTML());
 
    		// TODO: This styling does not actually work
-   		$('#rating').css('background-color', self.ratingColor);
-   		infoWindow.open(map, marker);
+   		// $('#rating').css('background-color', self.ratingColor);
+   		// infoWindow.open(map, marker);
+   		marker.setAnimation(google.maps.Animation.BOUNCE);
+
+		// Marker bounce animation stops after 1.2 seconds
+		setTimeout(() => {
+			marker.setAnimation(null);
+			infoWindow.setContent(self.createInfoWindowHTML());
+			infoWindow.open(map, marker);
+		}, 1200);
    	});
 
    	// Change marker appearance on mouseover/mouseout
@@ -132,9 +140,6 @@ var ViewModel = function(map) {
 		this.map.setCenter(this.position);
 		this.marker.setAnimation(google.maps.Animation.BOUNCE);
 
-		// TODO: Get color change working properly
-		self.setMarkerColors(this.marker);	
-
 		// Marker bounce animation stops after 1.2 seconds
 		setTimeout(() => {
 			this.marker.setAnimation(null);
@@ -150,11 +155,6 @@ var ViewModel = function(map) {
 		marker.setMap(null);
 	});
 }*/
-
-ViewModel.prototype.setMarkerColors = function(marker) {
-	markers.forEach(item => item.setIcon('img/yellow-pin.png'));
-	marker.setIcon('img/orange-pin.png');
-}
 
 function initMap () {
 
