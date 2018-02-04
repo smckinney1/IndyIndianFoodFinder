@@ -3,7 +3,7 @@ const FS_CLIENT_SECRET = 'YOSEENXFZGGMTIENAUMGYPGLLFJKQLKW4WXBLTC0NVCVT2X0'
 const FS_API_VERSION = '20180101';
 const FS_ENDPOINT = 'https://api.foursquare.com/v2/venues/'
 const FS_QUERY_STRING = '?client_id=' + FS_CLIENT_ID + '&client_secret=' + FS_CLIENT_SECRET + '&v=' + FS_API_VERSION;
-const FS_BASE_URL = 'https://foursquare.com/v/apna-kitchen-cart/'
+const FS_BASE_URL = 'https://foursquare.com/v/'
 
 const MAP_STYLES = [
     {

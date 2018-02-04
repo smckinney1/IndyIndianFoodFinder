@@ -51,11 +51,6 @@ Restaurant.prototype.addMarkerListeners = function(marker) {
 
 	// Create info window
    	marker.addListener('click', function() {
-   		// infoWindow.setContent(self.createInfoWindowHTML());
-
-   		// TODO: This styling does not actually work
-   		// $('#rating').css('background-color', self.ratingColor);
-   		// infoWindow.open(map, marker);
    		marker.setAnimation(google.maps.Animation.BOUNCE);
 
 		// Marker bounce animation stops after 1.2 seconds
@@ -82,7 +77,7 @@ Restaurant.prototype.createInfoWindowHTML = function() {
 	return '<div id="info-window">' + this.bestPhotoHTML 
 			+ '<h3>' + this.name + '</h3>' 
    			+ '<p>' + this.address + '</p>' 
-   			+ '<a href="' + FS_BASE_URL + this.foursquareID + '" target="_blank"><img id="fs-img" src="img/FourSquare_Social.png"></a>'
+   			+ '<a href="' + FS_BASE_URL + this.foursquareID + '" target="_blank" alt="FourSquare logo" title="Visit on FourSquare"><img id="fs-img" src="img/FourSquare_Social.png"></a>'
    			+ '<ul>'
 	   			+ '<li class="info-window-li">Here Now: ' + this.hereNow + '</li>'
 	   			+ '<li class="info-window-li">Check-in Count: ' + this.checkInCount + '</li>'
@@ -95,27 +90,51 @@ var ViewModel = function(map) {
 	self.map = map;
 	self.restaurantList = ko.observableArray([]);
 	self.searchQuery = ko.observable('');
+	self.totalLoaded = 0;
+	self.restaurantsWithErrors = [];
+
+	function checkRestaurantLoad () {
+		if (self.totalLoaded === indianRestaurants.length) {
+			if (self.restaurantsWithErrors.length > 0) {
+				console.log('Aww something bad happened with the following places: ' + self.restaurantsWithErrors);
+			}
+		}
+	}
 
 	// Call FourSquare API & push to restaurant list
 	indianRestaurants.forEach(function(restaurant) {
 		var url = FS_ENDPOINT + restaurant.foursquareID + FS_QUERY_STRING;
 
+		if (restaurant.name === 'Chapati' || restaurant.name === 'Apna Kitchen') {
+			url = FS_ENDPOINT + restaurant.foursquareID + "FS_QUERY_STRING";
+		}
+
 		// TODO: Should this be called in the ViewModel or Model?
-		// TODO: Change the error handling
+		// "Not available" shown if no venue rating.
 		fetch(url)
 			.then( response => response.json() )
 			.then( data => {
 				venue = data.response.venue;
 				checkInCount = venue.stats.checkinsCount;
-				rating = venue.rating;
-				ratingColor = venue.ratingColor;
+				rating = venue.rating || 'Not available';
+				ratingColor = venue.ratingColor || '';
 				hereNow = venue.hereNow.count;
 				bestPhotoHTML = '<img class="restPhoto" src="' + venue.bestPhoto.prefix + '' + venue.bestPhoto.width + 'x' + venue.bestPhoto.height  + venue.bestPhoto.suffix + '">';
 				self.restaurantList.push(new Restaurant(restaurant, map, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML));
+				self.totalLoaded++;
+				checkRestaurantLoad();
 			})
-			.catch( error => console.log(error) );
-
+			.catch( error => { 
+				self.totalLoaded++;
+				self.restaurantsWithErrors.push(restaurant.name);
+				checkRestaurantLoad();
+			} );
 	});
+
+/*	if (self.restaurantList().length < indianRestaurants.length) {
+		debugger;
+		console.log('something failed');
+	}*/
 
 	// Provide the DOM with a restaurant list sorted by name (automatically runs on page load)
 	self.sortedRestaurantList = ko.computed(() =>  {
