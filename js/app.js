@@ -110,7 +110,17 @@ var ViewModel = function(map) {
 	});
 
 	// Provide the DOM with a restaurant list sorted by name (automatically runs on page load)
-	self.sortedRestaurantList = ko.computed(() => self.restaurantList.sort((left, right) => left.name == right.name ? 0 : (left.name < right.name ? -1 : 1)));
+	self.sortedRestaurantList = ko.computed(() =>  {
+		self.restaurantList().sort((left, right) => {
+			if (left.name == right.name) {
+				return 0;
+			} else if (left.name < right.name) {
+				return -1;
+			} else {
+				return 1;
+			}
+		})
+	});
 
 	// The sorted restaurant list is filtered when a user begins typing in the Search box
 	// Checks if the first characters in the search query are contained in the first characters of the restaurant name
