@@ -1,5 +1,5 @@
 var map,
-	markers = [],
+	markers = ko.observableArray([]),
 	locations = [],
 	infoWindow,
 	venue, 
@@ -10,7 +10,7 @@ var map,
 	bestPhotoHTML,
 	filter;
 
-var Restaurant = function (restaurantData, map, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML) {
+var Restaurant = function (restaurantData, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML) {
 	var self = this;
 	// Data from model.js
 	self.name = restaurantData.name;
@@ -18,11 +18,8 @@ var Restaurant = function (restaurantData, map, checkInCount, rating, ratingColo
 	self.position = restaurantData.position;
 	self.foursquareID = restaurantData.foursquareID;
 
-	// Required to work with map on screen
-	self.map = map;
-
 	// Data from API call to FourSquare
-	if (arguments.length > 2) {
+	if (arguments.length > 1) {
 		self.checkInCount = checkInCount;
 		self.rating = rating;
 		self.ratingColor = ratingColor;
@@ -34,12 +31,13 @@ var Restaurant = function (restaurantData, map, checkInCount, rating, ratingColo
 		icon: 'img/yellow-pin.png',
 		position: self.position,
 		title: self.name,
-		map: self.map,
+		map: map,
+		// map: null,
 		animation: google.maps.Animation.DROP
     });
 
 	self.addMarkerListeners(self.marker);
-	markers.push(self.marker);
+	markers().push(self.marker);
 };
 
 Restaurant.prototype.addMarkerListeners = function(marker) {
@@ -92,9 +90,8 @@ Restaurant.prototype.createInfoWindowHTML = function() {
    			+ '</div>';
 };
 
-var ViewModel = function(map) {
+var ViewModel = function() {
 	var self = this;
-	self.map = map;
 	self.restaurantList = ko.observableArray([]);
 	self.searchQuery = ko.observable('');
 	self.totalLoaded = 0;
@@ -114,13 +111,13 @@ var ViewModel = function(map) {
 				ratingColor = venue.ratingColor || '';
 				hereNow = venue.hereNow.count;
 				bestPhotoHTML = '<img class="restPhoto" src="' + venue.bestPhoto.prefix + '' + venue.bestPhoto.width + 'x' + venue.bestPhoto.height  + venue.bestPhoto.suffix + '">';
-				self.restaurantList.push(new Restaurant(restaurant, map, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML));
+				self.restaurantList.push(new Restaurant(restaurant, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML));
 				self.totalLoaded++;
 				self.checkRestaurantLoad();
 			})
 			.catch( error => { 
 				self.totalLoaded++;
-				self.restaurantList.push(new Restaurant(restaurant, map));
+				self.restaurantList.push(new Restaurant(restaurant));
 				self.restaurantsWithErrors.push({ name: restaurant.name });
 				self.checkRestaurantLoad();
 			} );
@@ -150,8 +147,22 @@ var ViewModel = function(map) {
 
 	// The sorted restaurant list is filtered when a user begins typing in the Search box
 	// Checks if the first characters in the search query are contained in the first characters of the restaurant name
-	self.filteredRestaurantList = ko.computed(() => self.restaurantList().filter(item => item.name.toUpperCase().indexOf(self.searchQuery().toUpperCase()) === 0));
+	self.filteredRestaurantList = ko.computed(() => {
+		// TODO: RENAME FUNCTION, WORK ON MAP MARKER FILTERING
+		var blah = self.restaurantList().filter(item => item.name.toUpperCase().indexOf(self.searchQuery().toUpperCase()) === 0);
+		markers().forEach(function(mark) {
+			if (mark.title.toUpperCase().indexOf(self.searchQuery().toUpperCase()) < 0) {
+				mark.setMap(null);
+			}
+		});
+		return blah;
+	});
 
+/*	self.filteredMarkers = ko.computed(function() {
+
+	});*/
+
+	// If any restaurants failed to load FourSquare data, they will also be sorted alphabetically.
 	self.sortedRestaurantsWithErrors = ko.computed(() =>  {
 		self.restaurantsWithErrors().sort((left, right) => {
 			if (left.name == right.name) {
@@ -166,8 +177,8 @@ var ViewModel = function(map) {
 
 	self.restaurantClickHandler = function() {
 		// Zoom in the map and set position
-		this.map.setZoom(16);
-		this.map.setCenter(this.position);
+		map.setZoom(16);
+		map.setCenter(this.position);
 		this.marker.setAnimation(google.maps.Animation.BOUNCE);
 
 		// Marker bounce animation stops after 1.2 seconds
@@ -206,7 +217,7 @@ function initMap () {
     	map.setCenter(center);
     });
 
-    ko.applyBindings(new ViewModel(map));
+    ko.applyBindings(new ViewModel());
 }
 
 

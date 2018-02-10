@@ -7,6 +7,9 @@ Map displays all location markers by default, and displays the filtered subset o
 A README file is included detailing all steps required to successfully run the application.
 
 
+--Try to get CSS of rating to change based on FourSquare's rating color
+
+
 ***************** FINISHED TODOS *****************
 
 
