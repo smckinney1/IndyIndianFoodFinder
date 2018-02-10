@@ -2,8 +2,6 @@
 
 All application components render on-screen in a responsive manner.
 
-Map displays all location markers by default, and displays the filtered subset of location markers when a filter is applied.
-
 A README file is included detailing all steps required to successfully run the application.
 
 

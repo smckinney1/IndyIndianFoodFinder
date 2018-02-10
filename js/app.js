@@ -31,8 +31,7 @@ var Restaurant = function (restaurantData, checkInCount, rating, ratingColor, he
 		icon: 'img/yellow-pin.png',
 		position: self.position,
 		title: self.name,
-		map: map,
-		// map: null,
+		map: null,
 		animation: google.maps.Animation.DROP
     });
 
@@ -66,7 +65,6 @@ Restaurant.prototype.addMarkerListeners = function(marker) {
 
 };
 
-// TODO: Is this in the right place? VM vs outside of the VM?
 Restaurant.prototype.createInfoWindowHTML = function() {
 	var foursquareListHTML;
 
@@ -101,7 +99,6 @@ var ViewModel = function() {
 	indianRestaurants.forEach(function(restaurant) {
 		var url = FS_ENDPOINT + restaurant.foursquareID + FS_QUERY_STRING;
 
-		// TODO: Should this be called in the ViewModel or Model?
 		fetch(url)
 			.then( response => response.json() )
 			.then( data => {
@@ -148,21 +145,21 @@ var ViewModel = function() {
 	// The sorted restaurant list is filtered when a user begins typing in the Search box
 	// Checks if the first characters in the search query are contained in the first characters of the restaurant name
 	self.filteredRestaurantList = ko.computed(() => {
-		// TODO: RENAME FUNCTION, WORK ON MAP MARKER FILTERING
-		var blah = self.restaurantList().filter(item => item.name.toUpperCase().indexOf(self.searchQuery().toUpperCase()) === 0);
+		var filter = self.restaurantList().filter(item => item.name.toUpperCase().indexOf(self.searchQuery().toUpperCase()) === 0);
+
+		// Filter the markers on screen too
 		markers().forEach(function(mark) {
-			if (mark.title.toUpperCase().indexOf(self.searchQuery().toUpperCase()) < 0) {
+			if (mark.title.toUpperCase().indexOf(self.searchQuery().toUpperCase()) === 0) {
+				mark.setMap(map);
+			} else {
 				mark.setMap(null);
 			}
 		});
-		return blah;
+
+		return filter;
 	});
 
-/*	self.filteredMarkers = ko.computed(function() {
-
-	});*/
-
-	// If any restaurants failed to load FourSquare data, they will also be sorted alphabetically.
+	// If any restaurants failed to load FourSquare data, they will also be sorted alphabetically in the resulting modal window.
 	self.sortedRestaurantsWithErrors = ko.computed(() =>  {
 		self.restaurantsWithErrors().sort((left, right) => {
 			if (left.name == right.name) {
@@ -189,13 +186,6 @@ var ViewModel = function() {
 		}, 1200);
 	}
 };
-
-// TODO: Needed????
-/*function hideMarkers() {
-	markers.forEach(function(marker) {
-		marker.setMap(null);
-	});
-}*/
 
 function initMap () {
 
