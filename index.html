@@ -6,10 +6,10 @@
 	<meta name ="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="css/app.css">
 	<link rel="stylesheet" href="css/modal.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
 <body>
 
@@ -25,16 +25,24 @@
 
 	<div class="app-container">
 
-		<section id="sidebar">
+		<div class="mobile-view">
+			<span class="icon"><i class="fas fa-bars fa-2x"></i></span>
+			<input type="text" placeholder="search" data-bind="value: searchQuery, valueUpdate: 'keyup'" autofocus>
+			<ul class="mobile-filter-list" data-bind="foreach: filteredRestaurantList">
+				<li class="restaurant-list" data-bind="text: $data.name, click: $parent.restaurantClickHandler"></li>
+			</ul>
+		</div>
 
-			<h1>Local Indian Food</h1>
+		<section class="sidebar">
+
+			<h1 class="sidebar-heading">Local Indian Food</h1>
 			<input type="text" placeholder="search" data-bind="value: searchQuery, valueUpdate: 'keyup'" autofocus>
 			<ul data-bind="foreach: filteredRestaurantList">
 				<li class="restaurant-list" data-bind="text: $data.name, click: $parent.restaurantClickHandler"></li>
 			</ul>
 		</section>
 
-		<section id="map"></div>
+		<section class="map" id="map"></div>
 	</div>
 
 
@@ -44,7 +52,6 @@
 	  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 	  crossorigin="anonymous">
 	</script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="js/lib/knockout.js"></script>
 	<script src="js/constants.js"></script>
 	<script async defer 

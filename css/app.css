@@ -20,29 +20,28 @@ body {
 html,
 body,
 .app-container,
-#sidebar {
+.sidebar,
+.map {
 	height: 100%;
 }
 
 body {
 	font-family: Raleway, Verdana, sans-serif;
 	color: #fff;
+	background-color: #444;
+
 }
 
-h1 {
-	margin-top: 0px;
-	margin-left: 0px;
-}
-
-/* This was hiding map controls. Map center with this styling was {lat: 39.8, lng: -86.0581} */
-/*html, body, section, #map {
-	width: 100%;
-	height: 100%;
-}*/
-
-input, 
-#map {
-	color: #000;
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
 }
 
 ul {
@@ -54,6 +53,39 @@ ul {
 
 li {
 	list-style-type: none;
+}
+
+input {
+	width: 80%;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+input:focus {
+	outline: none;
+}
+
+input, 
+.map {
+	color: #000;
+}
+
+.no-display, .mobile-view {
+	display: none;
+}
+
+
+.app-container {
+	display: flex;
+}
+
+.mobile-filter-list {
+	position: relative;
+	z-index: 2;
+	height: 0px;
+	text-align: center;
+	overflow: auto;
+	transition: 1s ease all;
 }
 
 .restaurant-list {
@@ -82,17 +114,86 @@ li {
 	display: block;
 }
 
-#sidebar {
-	background-color: #444;
-	width: 360px;
+.sidebar-heading {
+	margin-top: 0px;
+	margin-left: 0px;
+	padding-top: 10px;
 }
 
-#map {
+.sidebar {
+	position: absolute;
+	padding-left: 10px;
+	width: 360px;
+	left: 0px;
+	transition: 1s ease all;
+}
+
+.map {
 	border: 5px groove #de005f;
 	position: absolute;
-	height: 100%;
 	top: 0px;
 	right: 0px;
 	bottom: 0px;
 	width: calc(100% - 360px);
+}
+
+.move {
+	height: calc(100vh - 75px);
+}
+
+@media screen and (max-width: 1070px) {
+	h1 {
+		font-size: 1.5em;
+	}
+	.sidebar {
+		width: 250px;
+	}
+	.map {
+		width: calc(100% - 250px);
+	}
+	.restaurant-list {
+		font-size: 16px;
+	}
+}
+
+@media screen and (max-width: 750px) {
+	input {
+		display: inline;
+		margin-top: 20px;
+		margin-left: 10px;
+		margin-right: 5%;
+		width: 80%;
+	}
+	.restaurant-list {
+		font-size: 22px;
+		padding: 1em;
+	}
+	.mobile-filter-list {
+		margin-top: 23px;
+		background-color: #444;
+		opacity: 0.9;
+	}
+	.icon {
+		margin-left: 5%;
+		vertical-align: -30%;
+	}
+	.sidebar {
+		left: -365px;
+	}
+	.mobile-view {
+		display: block;
+		width: 100%;
+		height: 75px;
+	}
+	.map {
+		top: 75px;
+		width: 100%;
+		height: calc(100% - 75px);
+	}
+}
+
+@media screen and (max-width: 421px) {
+	input {
+		width: 75%;
+	}
 }

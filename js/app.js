@@ -10,8 +10,9 @@ var map,
 	bestPhotoHTML,
 	filter;
 
-$('#sidebar').on('click', function() {
-	$('#sidebar').toggleClass('move');
+$('.icon').click(function() {
+	$('.mobile-filter-list').toggleClass('move');
+	// $('.map').toggleClass('no-display');
 });
 
 var Restaurant = function (restaurantData, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML) {
