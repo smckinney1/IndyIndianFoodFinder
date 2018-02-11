@@ -10,6 +10,10 @@ var map,
 	bestPhotoHTML,
 	filter;
 
+$('#sidebar').on('click', function() {
+	$('#sidebar').toggleClass('move');
+});
+
 var Restaurant = function (restaurantData, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML) {
 	var self = this;
 	// Data from model.js

@@ -12,26 +12,29 @@
 	<link rel="stylesheet" href="css/modal.css">
 </head>
 <body>
-	<div class="container-fluid">
 
-		<div id="simple-modal" class="modal">
-            <div class="modal-content">
-            	<span id="close-btn">&times;</span>
-                <p>An error occurred retrieving FourSquare data for the following:</p>
-				<ul id="error-list" data-bind="foreach: restaurantsWithErrors">
-					<li data-bind="text: $data.name"></li>
-				</ul>
-            </div>
+	<div id="simple-modal" class="modal">
+        <div class="modal-content">
+        	<span id="close-btn">&times;</span>
+            <p>An error occurred retrieving FourSquare data for the following:</p>
+			<ul id="error-list" data-bind="foreach: restaurantsWithErrors">
+				<li data-bind="text: $data.name"></li>
+			</ul>
         </div>
+	</div>
 
-		<section>
+	<div class="app-container">
+
+		<section id="sidebar">
+
 			<h1>Local Indian Food</h1>
 			<input type="text" placeholder="search" data-bind="value: searchQuery, valueUpdate: 'keyup'" autofocus>
 			<ul data-bind="foreach: filteredRestaurantList">
 				<li class="restaurant-list" data-bind="text: $data.name, click: $parent.restaurantClickHandler"></li>
 			</ul>
-			<div id="map"></div>
 		</section>
+
+		<section id="map"></div>
 	</div>
 
 
@@ -41,6 +44,7 @@
 	  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 	  crossorigin="anonymous">
 	</script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="js/lib/knockout.js"></script>
 	<script src="js/constants.js"></script>
 	<script async defer 

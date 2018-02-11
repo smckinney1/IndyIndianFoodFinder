@@ -5,19 +5,33 @@ https://developers.google.com/maps/documentation/javascript/basics
 
 ******************************/
 
-html {
+*,
+*:before,
+*:after {
 	box-sizing: border-box;
+}
+
+html, 
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+html,
+body,
+.app-container,
+#sidebar {
+	height: 100%;
 }
 
 body {
 	font-family: Raleway, Verdana, sans-serif;
-	background-color: #444;
 	color: #fff;
 }
 
-html, body {
-	margin: 0;
-	padding: 0;
+h1 {
+	margin-top: 0px;
+	margin-left: 0px;
 }
 
 /* This was hiding map controls. Map center with this styling was {lat: 39.8, lng: -86.0581} */
@@ -26,12 +40,16 @@ html, body {
 	height: 100%;
 }*/
 
-input, #map {
+input, 
+#map {
 	color: #000;
 }
 
 ul {
 	padding-left: 0px;
+	margin: 20px 0px 0px 0px;
+	height: calc(100% - 95px);
+	overflow: auto;
 }
 
 li {
@@ -64,10 +82,17 @@ li {
 	display: block;
 }
 
+#sidebar {
+	background-color: #444;
+	width: 360px;
+}
+
 #map {
+	border: 5px groove #de005f;
 	position: absolute;
+	height: 100%;
 	top: 0px;
 	right: 0px;
 	bottom: 0px;
-	left: 350px;
+	width: calc(100% - 360px);
 }
