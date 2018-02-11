@@ -177,6 +177,9 @@ var ViewModel = function() {
 	});
 
 	self.restaurantClickHandler = function() {
+		if ($('.mobile-filter-list').hasClass('move')) {
+			$('.mobile-filter-list').removeClass('move');
+		};
 		// Zoom in the map and set position
 		map.setZoom(16);
 		map.setCenter(this.position);
