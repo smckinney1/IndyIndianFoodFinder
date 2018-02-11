@@ -10,11 +10,6 @@ var map,
 	bestPhotoHTML,
 	filter;
 
-$('.icon').click(function() {
-	$('.mobile-filter-list').toggleClass('move');
-	// $('.map').toggleClass('no-display');
-});
-
 var Restaurant = function (restaurantData, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML) {
 	var self = this;
 	// Data from model.js
@@ -99,6 +94,10 @@ var ViewModel = function() {
 	self.searchQuery = ko.observable('');
 	self.totalLoaded = 0;
 	self.restaurantsWithErrors = ko.observableArray([]);
+
+	$('.icon').click(function() {
+		$('.mobile-filter-list').toggleClass('move');
+	});
 
 	// Call FourSquare API & push to restaurant list
 	indianRestaurants.forEach(function(restaurant) {
