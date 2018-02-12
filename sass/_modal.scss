@@ -1,0 +1,46 @@
+ .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+
+    &-content {
+        background-color: #f4f4f4;
+        margin: 10% auto;
+        padding: 20px;
+        width: 40%;
+        color: #444;
+        box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.17);
+        
+        /*@keyframes at the end will put in the functionality of animation*/
+        animation-name: modalopen;
+        animation-duration: 1s;
+    }
+}
+
+#error-list {
+    list-style-type: circle;
+}
+
+#close-btn {
+    display: block;
+    color: #ccc;
+    text-align: right;
+    font-size: 30px;
+    &:hover,
+    &:focus {
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+    }
+}
+
+/*In specified duration of 1 second in .modal-content, the modal will fade in*/
+@keyframes modalopen {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
