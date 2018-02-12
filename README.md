@@ -12,7 +12,7 @@ This project uses the Google Maps and Foursquare APIs to render data and locatio
 
 ## Instructions
 
-For now, the project must be downloaded and run from your local files. I plan to host this on GitHub once finished.
+The project can be run from [GitHub Pages](https://smckinney1.github.io/MapsProject/).
 
 When running the app, type in a search query in the search box to filter map results. The filter uses "starts with" logic and not "contains" logic.
 

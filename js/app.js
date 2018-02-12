@@ -83,7 +83,7 @@ Restaurant.prototype.createInfoWindowHTML = function() {
 	return '<div id="info-window">' + (this.bestPhotoHTML ? this.bestPhotoHTML : '') 
 				+ '<h3>' + this.name + '</h3>' 
 	   			+ '<p>' + this.address + '</p>' 
-	   			+ '<a href="' + FS_BASE_URL + this.foursquareID + '" target="_blank" alt="FourSquare logo" title="Visit on FourSquare"><img id="fs-img" src="img/FourSquare_Social.png"></a>'
+	   			+ '<a href="' + FS_BASE_URL + this.foursquareID + '" target="_blank" alt="FourSquare logo" title="Visit on FourSquare"><img id="fs-img" src="img/Foursquare_Social.png"></a>'
 	   			+ foursquareListHTML
    			+ '</div>';
 };
