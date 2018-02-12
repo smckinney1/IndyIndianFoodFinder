@@ -95,10 +95,6 @@ var ViewModel = function() {
 	self.totalLoaded = 0;
 	self.restaurantsWithErrors = ko.observableArray([]);
 
-	$('.icon').click(function() {
-		$('.mobile-filter-list').toggleClass('move');
-	});
-
 	// Call FourSquare API & push to restaurant list
 	indianRestaurants.forEach(function(restaurant) {
 		var url = FS_ENDPOINT + restaurant.foursquareID + FS_QUERY_STRING;
@@ -177,6 +173,8 @@ var ViewModel = function() {
 	});
 
 	self.restaurantClickHandler = function() {
+		
+		// On mobile view, hide the list of restaurants if user clicks on one
 		if ($('.mobile-filter-list').hasClass('move')) {
 			$('.mobile-filter-list').removeClass('move');
 		};
@@ -192,6 +190,11 @@ var ViewModel = function() {
 			infoWindow.open(map, this.marker);
 		}, 1200);
 	}
+
+	// Use CSS transition when hamburger icon is clicked in mobile view 
+	$('.icon').click(function() {
+		$('.mobile-filter-list').toggleClass('move');
+	});
 };
 
 function initMap () {
