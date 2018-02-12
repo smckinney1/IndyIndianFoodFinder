@@ -127,7 +127,7 @@ var ViewModel = function() {
 				modalData.openModal();
 			}
 		}
-	}
+	};
 
 	// Provide the DOM with a restaurant list sorted by name (automatically runs on page load)
 	self.sortedRestaurantList = ko.computed(() =>  {
@@ -139,7 +139,7 @@ var ViewModel = function() {
 			} else {
 				return 1;
 			}
-		})
+		});
 	});
 
 	// The sorted restaurant list is filtered when a user begins typing in the Search box
@@ -169,7 +169,7 @@ var ViewModel = function() {
 			} else {
 				return 1;
 			}
-		})
+		});
 	});
 
 	self.restaurantClickHandler = function() {
@@ -177,7 +177,7 @@ var ViewModel = function() {
 		// On mobile view, hide the list of restaurants if user clicks on one
 		if ($('.mobile-filter-list').hasClass('move')) {
 			$('.mobile-filter-list').removeClass('move');
-		};
+		}
 		// Zoom in the map and set position
 		map.setZoom(16);
 		map.setCenter(this.position);
@@ -189,7 +189,7 @@ var ViewModel = function() {
 			infoWindow.setContent(this.createInfoWindowHTML());
 			infoWindow.open(map, this.marker);
 		}, 1200);
-	}
+	};
 
 	// Use CSS transition when hamburger icon is clicked in mobile view 
 	$('.icon').click(function() {
