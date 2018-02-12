@@ -14,6 +14,16 @@ This project uses the Google Maps and Foursquare APIs to render data and locatio
 
 For now, the project must be downloaded and run from your local files. I plan to host this on GitHub once finished.
 
+When running the app, type in a search query in the search box to filter map results. The filter uses "starts with" logic and not "contains" logic.
+
+Running on smaller screens will cause the sidebar to disappear and be replaced with a search box at the top of the screen, and to display the list of all restaurants, users should click the hamburger icon to the left of the search box.
+
+Clicking on a map marker will display an info window containing a photo from the restaurant using the FourSquare API as well as a few items of data from that API. It will also display the restaurant name and address.
+
+If an error occurs loading FourSquare data for the restaurants, on app load a modal will appear showing which restaurants failed to load FourSquare data. In this situation the FourSquare data in the info windows will be replaced by static text indicating an error occurred loading FourSquare data.
+
+The FourSquare icon in each info window is clickable and will bring the user to the restaurant's page on FourSquare.
+
 ## Code & Credits
 
 - The favicon for this site was obtained from [freefavicon](https://www.freefavicon.com/).
