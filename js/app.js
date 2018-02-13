@@ -71,21 +71,21 @@ Restaurant.prototype.createInfoWindowHTML = function() {
 	// Making sure the FourSquare data was loaded before displaying the list
 	if (typeof this.hereNow === 'number' && typeof this.checkInCount === 'number' && (typeof this.rating === 'number' || typeof this.rating === 'string')) {
 		foursquareListHTML  = 
-			'<ul>'
-	   			+ '<li class="info-window-li">Here Now: ' + this.hereNow + '</li>'
-	   			+ '<li class="info-window-li">Check-in Count: ' + this.checkInCount + '</li>'
-	   			+ '<li class="info-window-li" id="rating">Rating: ' + this.rating + '</li>'
-	   		+ '</ul>';
+			'<ul>' +
+	   			'<li class="info-window-li">Here Now: ' + this.hereNow + '</li>' +
+	   			'<li class="info-window-li">Check-in Count: ' + this.checkInCount + '</li>' +
+	   			'<li class="info-window-li" id="rating">Rating: ' + this.rating + '</li>' +
+	   		'</ul>';
 	} else {
 		foursquareListHTML = '<p><em>An error occurred fetching Foursquare data for this restaurant.</em></p>';
 	}
 
-	return '<div id="info-window">' + (this.bestPhotoHTML ? this.bestPhotoHTML : '') 
-				+ '<h3>' + this.name + '</h3>' 
-	   			+ '<p>' + this.address + '</p>' 
-	   			+ '<a href="' + FS_BASE_URL + this.foursquareID + '" target="_blank" alt="FourSquare logo" title="Visit on FourSquare"><img id="fs-img" src="img/Foursquare_Social.png"></a>'
-	   			+ foursquareListHTML
-   			+ '</div>';
+	return '<div id="info-window">' + (this.bestPhotoHTML ? this.bestPhotoHTML : '') +
+				'<h3>' + this.name + '</h3>' +
+	   			'<p>' + this.address + '</p>' +
+	   			'<a href="' + FS_BASE_URL + this.foursquareID + '" target="_blank" alt="FourSquare logo" title="Visit on FourSquare"><img id="fs-img" src="img/Foursquare_Social.png"></a>'+
+	   			foursquareListHTML +
+   			'</div>';
 };
 
 var ViewModel = function() {
