@@ -2,11 +2,11 @@ var map,
 	markers = ko.observableArray([]),
 	locations = [],
 	infoWindow,
-	venue, 
-	checkInCount, 
-	rating, 
-	ratingColor, 
-	hereNow, 
+	venue,
+	checkInCount,
+	rating,
+	ratingColor,
+	hereNow,
 	bestPhotoHTML,
 	filter;
 
@@ -112,7 +112,7 @@ var ViewModel = function() {
 				self.totalLoaded++;
 				self.checkRestaurantLoad();
 			})
-			.catch( error => { 
+			.catch( error => {
 				self.totalLoaded++;
 				self.restaurantList.push(new Restaurant(restaurant));
 				self.restaurantsWithErrors.push({ name: restaurant.name });
@@ -191,7 +191,7 @@ var ViewModel = function() {
 		}, 1200);
 	};
 
-	// Use CSS transition when hamburger icon is clicked in mobile view 
+	// Use CSS transition when hamburger icon is clicked in mobile view
 	$('.icon').click(function() {
 		$('.mobile-filter-list').toggleClass('move');
 	});
