@@ -99,10 +99,6 @@ var ViewModel = function() {
 	indianRestaurants.forEach(function(restaurant) {
 		var url = FS_ENDPOINT + restaurant.foursquareID + FS_QUERY_STRING;
 
-		if (restaurant.name === 'Apna Kitchen' || restaurant.name === 'Chapati') {
-			url = FS_ENDPOINT + restaurant.foursquareID + 'FS_QUERY_STRING';
-		}
-
 		fetch(url)
 			.then( response => response.json() )
 			.then( data => {
