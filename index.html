@@ -16,7 +16,7 @@
 
 	<div id="simple-modal" class="modal">
         <div class="modal-content">
-        	<span id="close-btn">&times;</span>
+        	<span id="close-btn" data-bind="click: closeModal">&times;</span>
             <p>An error occurred retrieving FourSquare data for the following:</p>
 			<ul id="error-list" data-bind="foreach: restaurantsWithErrors">
 				<li data-bind="text: $data.name"></li>
@@ -27,7 +27,7 @@
 	<div class="app-container">
 
 		<div class="mobile-view">
-			<span class="icon"><i class="fas fa-bars fa-2x"></i></span>
+			<span class="icon" data-bind="click: mobileIconClickHandler"><i class="fas fa-bars fa-2x"></i></span>
 			<input type="text" placeholder="search" data-bind="value: searchQuery, valueUpdate: 'keyup'" autofocus>
 			<ul class="mobile-filter-list" data-bind="foreach: filteredRestaurantList">
 				<li class="restaurant-list" data-bind="text: $data.name, click: $parent.restaurantClickHandler"></li>

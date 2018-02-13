@@ -99,6 +99,10 @@ var ViewModel = function() {
 	indianRestaurants.forEach(function(restaurant) {
 		var url = FS_ENDPOINT + restaurant.foursquareID + FS_QUERY_STRING;
 
+		if (restaurant.name === 'Apna Kitchen' || restaurant.name === 'Chapati') {
+			url = FS_ENDPOINT + restaurant.foursquareID + 'FS_QUERY_STRING';
+		}
+
 		fetch(url)
 			.then( response => response.json() )
 			.then( data => {
@@ -124,7 +128,7 @@ var ViewModel = function() {
 	self.checkRestaurantLoad = function () {
 		if (self.totalLoaded === indianRestaurants.length) {
 			if (self.restaurantsWithErrors().length > 0) {
-				modalData.openModal();
+				self.openModal();
 			}
 		}
 	};
@@ -192,9 +196,19 @@ var ViewModel = function() {
 	};
 
 	// Use CSS transition when hamburger icon is clicked in mobile view
-	$('.icon').click(function() {
+	self.mobileIconClickHandler = function() {
 		$('.mobile-filter-list').toggleClass('move');
-	});
+	};
+
+	// Error modal click handlers
+	self.openModal = function() {
+		$('#simple-modal').css('display', 'block');
+		$('.btn-group').css('display', 'block');
+	};
+
+	self.closeModal = function() {
+		$('#simple-modal').css('display', 'none');
+	};
 };
 
 function initMap () {
@@ -219,5 +233,3 @@ function initMap () {
 
     ko.applyBindings(new ViewModel());
 }
-
-
