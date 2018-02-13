@@ -14,6 +14,8 @@ This project uses the Google Maps and Foursquare APIs to render data and locatio
 
 The project can be run from [GitHub Pages](https://smckinney1.github.io/MapsProject/).
 
+If running the file locally, simply open the index.html file in your browser.
+
 When running the app, type in a search query in the search box to filter map results. The filter uses "starts with" logic and not "contains" logic.
 
 Running on smaller screens will cause the sidebar to disappear and be replaced with a search box at the top of the screen, and to display the list of all restaurants, users should click the hamburger icon to the left of the search box.
