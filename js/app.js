@@ -10,6 +10,11 @@ var map,
 	bestPhotoHTML,
 	filter;
 
+// Google Maps requires a function of this name be defined globally to catch authentication failures
+function gm_authFailure() {
+	alert('An authentication failure occurred with the Google Maps API. Please try again later.');
+}
+
 var Restaurant = function (restaurantData, checkInCount, rating, ratingColor, hereNow, bestPhotoHTML) {
 	var self = this;
 	// Data from model.js
