@@ -31,6 +31,7 @@
     color: #ccc;
     text-align: right;
     font-size: 40px;
+    line-height: 1;
 }
 
 #close-btn:hover, #close-btn:focus {
