@@ -15,6 +15,11 @@ function gm_authFailure() {
 	alert('An authentication failure occurred with the Google Maps API. Please try again later.');
 }
 
+// General error handler for Maps API, such as network disconnected
+function mapsError() {
+	alert('An error has occurred loading Google Maps. Please try again later.');
+}
+
 var ViewModel = function() {
 	var self = this;
 	self.restaurantList = ko.observableArray([]);
