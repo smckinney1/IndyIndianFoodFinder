@@ -69,38 +69,19 @@ input,
 	color: #000;
 }
 
-/************************
-
-Mobile styles
-
-************************/
-
-.mobile-view {
+.icon {
 	display: none;
 }
-
-.mobile-filter-list {
-	position: relative;
-	z-index: 2;
-	height: 0px;
-	text-align: center;
-	overflow: auto;
-	transition: 1s ease all;
-}
-
-.move {
-	height: calc(100vh - 75px);
-}
-
-/************************
-
-Desktop styles
-
-************************/
 
 .app-container {
 	display: flex;
 }
+
+/************************
+
+Sidebar styles
+
+************************/
 
 .restaurant-list {
 	font-size: 22px;

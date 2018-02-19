@@ -107,8 +107,8 @@ var ViewModel = function() {
 	self.restaurantClickHandler = function() {
 		
 		// On mobile view, hide the list of restaurants if user clicks on one
-		if ($('.mobile-filter-list').hasClass('move')) {
-			$('.mobile-filter-list').removeClass('move');
+		if ($('.filtered-list').hasClass('move')) {
+			$('.filtered-list').removeClass('move');
 		}
 		// Zoom in the map and set position
 		map.setZoom(16);
@@ -125,7 +125,7 @@ var ViewModel = function() {
 
 	// Use CSS transition when hamburger icon is clicked in mobile view
 	self.mobileIconClickHandler = function() {
-		$('.mobile-filter-list').toggleClass('move');
+		$('.filtered-list').toggleClass('move');
 	};
 
 	// Error modal click handlers
