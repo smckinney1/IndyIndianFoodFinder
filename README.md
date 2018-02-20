@@ -12,7 +12,7 @@ This project uses the Google Maps and Foursquare APIs to render data and locatio
 
 ## Instructions
 
-The project can be run from [GitHub Pages](https://smckinney1.github.io/MapsProject/).
+The project can be run from [GitHub Pages](https://smckinney1.github.io/IndyIndianFoodFinder/).
 
 If running the file locally, simply open the index.html file in your browser.
 
