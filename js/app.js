@@ -124,8 +124,10 @@ var ViewModel = function() {
 	};
 
 	// Use CSS transition when hamburger icon is clicked in mobile view
+	self.transitionFilteredList = ko.observable(false);
+
 	self.mobileIconClickHandler = function() {
-		$('.filtered-list').toggleClass('move');
+		self.transitionFilteredList(!self.transitionFilteredList());
 	};
 
 	// Error modal click handlers
